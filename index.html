@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Число дня</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Колода Таро</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,49 +14,176 @@
             margin: 0;
             background-color: #f0f0f0;
         }
-        .container {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .tarot-deck {
+            width: 600px;
+            height: 400px;
+            position: relative;
         }
-        button {
+        .card {
+            width: 100px;
+            height: 150px;
+            position: absolute;
+            background-color: #1e3a8a;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: #60a5fa;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, left 0.3s ease, top 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.7);
+            transform: translateX(40px) translateY(-40px);
+            z-index: 100;
+        }
+        .shuffle-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #0088cc;
-            color: white;
+            background-color: #1e3a8a;
+            color: #bfdbfe;
             border: none;
             border-radius: 5px;
-            margin-top: 20px;
         }
-        #result {
+        .selected-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 300px;
+            background-color: #3b82f6;
+            border: 2px solid #1e3a8a;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 24px;
-            margin-top: 20px;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+            display: none;
+            z-index: 1001;
         }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Ваше число дня</h1>
-        <p>Нажмите кнопку, чтобы получить ваше уникальное число дня.</p>
-        <button id="generateBtn">Получить число</button>
-        <p id="result"></p>
-    </div>
+    <button class="shuffle-btn">Перемешать</button>
+    <div class="tarot-deck"></div>
+    <div class="selected-card"></div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        document.getElementById('generateBtn').addEventListener('click', function() {
-            let randomNumber = Math.floor(Math.random() * 100) + 1;
-            document.getElementById('result').textContent = 'Ваше число дня: ' + randomNumber;
+        const deck = document.querySelector('.tarot-deck');
+        const selectedCard = document.querySelector('.selected-card');
+        const shuffleBtn = document.querySelector('.shuffle-btn');
+        const tarotCards = [
+            'Шут', 'Маг', 'Жрица', 'Императрица', 'Император', 'Иерофант', 
+            'Влюбленные', 'Колесница', 'Сила', 'Отшельник', 'Колесо', 'Справедливость', 
+            'Повешенный', 'Смерть', 'Умеренность', 'Дьявол', 'Башня', 'Звезда', 'Луна', 
+            'Солнце', 'Суд', 'Мир'
+        ];
+
+        function createDeck() {
+            deck.innerHTML = '';
+            tarotCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.classList.add('card');
+                cardElement.textContent = '★';
+                cardElement.dataset.card = card;
+                positionCard(cardElement, index);
+                deck.appendChild(cardElement);
+            });
+        }
+
+        function positionCard(cardElement, index) {
+            cardElement.style.transition = 'none';
+            cardElement.style.transform = 'none';
+            cardElement.style.left = `${index * 15}px`;
+            cardElement.style.top = `${index * 2}px`;
+            cardElement.style.zIndex = index;
+            // Форсируем перерисовку
+            void cardElement.offsetWidth;
+            cardElement.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease, left 0.3s ease, top 0.3s ease';
+        }
+
+        function shuffleDeck() {
+            const cards = Array.from(deck.children);
+            shuffleBtn.disabled = true;
+
+            // Анимация "веера"
+            cards.forEach((card, index) => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.transform = `rotate(${index * 15 - 150}deg)`;
+                card.style.left = '300px';
+                card.style.top = '200px';
+            });
+
             setTimeout(() => {
-                tg.sendData(randomNumber.toString());
-                tg.close();
-            }, 1500); // Задержка в 1.5 секунды перед закрытием WebApp
-        });
+                // Анимация случайного разброса
+                cards.forEach(card => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.transform = 'none';
+                    card.style.left = `${Math.random() * 500}px`;
+                    card.style.top = `${Math.random() * 300}px`;
+                });
+
+                setTimeout(() => {
+                    // Перемешивание
+                    for (let i = cards.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [cards[i], cards[j]] = [cards[j], cards[i]];
+                    }
+
+                    // Анимация сбора карт обратно в колоду
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            positionCard(card, index);
+                            deck.appendChild(card);
+                        }, index * 50);
+                    });
+
+                    setTimeout(() => {
+                        shuffleBtn.disabled = false;
+                    }, cards.length * 50);
+                }, 500);
+            }, 500);
+        }
+
+        function selectCard(event) {
+            if (event.target.classList.contains('card')) {
+                const card = event.target.dataset.card;
+                selectedCard.textContent = card;
+                selectedCard.style.display = 'flex';
+                event.target.remove();
+                
+                // Перераспределяем оставшиеся карты
+                Array.from(deck.children).forEach((card, index) => {
+                    positionCard(card, index);
+                });
+                
+                setTimeout(() => {
+                    selectedCard.style.display = 'none';
+                    if (deck.children.length === 0) {
+                        createDeck();
+                    }
+                    tg.sendData(card);
+                    tg.close();
+                }, 5000);
+            }
+        }
+
+        createDeck();
+        deck.addEventListener('click', selectCard);
+        shuffleBtn.addEventListener('click', shuffleDeck);
     </script>
 </body>
 </html>
