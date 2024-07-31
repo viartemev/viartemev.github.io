@@ -107,7 +107,7 @@
                 cardFace.textContent = randomCard;
                 card.classList.add('flipped');
                 isFlipped = true;
-                setTimeout(() => callTelegram(randomCard), 600); // Вызываем после завершения анимации
+                setTimeout(() => callTelegram(randomCard), 1000); // Вызываем после завершения анимации
             } else {
                 card.classList.remove('flipped');
                 isFlipped = false;
