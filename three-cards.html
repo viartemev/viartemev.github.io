@@ -260,7 +260,10 @@
                 isFlipped = false
                 card.classList.remove('flipped')
             }, 1000)
-            setTimeout(() => callTelegram(randomCard), 3000);
+
+            if (selectedCards.length === 3) {
+                setTimeout(() => callTelegram(randomCard), 3000);
+            }
         }
     });
 </script>
