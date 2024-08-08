@@ -14,6 +14,7 @@
             margin: 0;
             background-color: #1a472a;
         }
+
         .deck {
             width: 200px;
             height: 300px;
@@ -21,30 +22,94 @@
             cursor: pointer;
             perspective: 1000px;
         }
+
         .card-back {
             width: 200px;
             height: 300px;
-            background-color: white;
+            background-color: #4b4b4b; /* Посветлее фон */
             border-radius: 10px;
+            border: 2px solid #888888; /* Видимая граница */
             position: absolute;
             top: 0;
             left: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .card-back:nth-child(2) { transform: translate(1px, 1px) rotate(0.5deg); }
-        .card-back:nth-child(3) { transform: translate(2px, 2px) rotate(1deg); }
-        .card-back:nth-child(4) { transform: translate(3px, 3px) rotate(1.5deg); }
-        .card-back:nth-child(5) { transform: translate(4px, 4px) rotate(2deg); }
-        .card {
-            width: 200px;
-            height: 300px;
-            position: absolute;
-            top: 0;
-            left: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             transform-style: preserve-3d;
             transition: transform 0.6s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent 70%), /* Светящийся центр */ radial-gradient(circle, #5d5d5d, #3a3a3a); /* Светлее градиент */
+            background-size: cover;
         }
-        .card-face, .card-back {
+
+        .card-back::before {
+            content: "✨";
+            display: block;
+            font-size: 100px;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), /* Внешнее свечение */ 0 0 30px rgba(255, 255, 255, 0.4), /* Дальнее свечение */ 0 0 45px rgba(0, 0, 255, 0.3); /* Синий отлив */
+            transform: rotate(45deg);
+            opacity: 0.9;
+        }
+
+        .card-back:nth-child(2) {
+            transform: translate(1px, 1px) rotate(1deg);
+        }
+
+        .card-back:nth-child(3) {
+            transform: translate(2px, 2px) rotate(2deg);
+        }
+
+        .card-back:nth-child(4) {
+            transform: translate(3px, 3px) rotate(3deg);
+        }
+
+        .card-back:nth-child(5) {
+            transform: translate(4px, 4px) rotate(4deg);
+        }
+
+        .card-back:nth-child(6) {
+            transform: translate(5px, 5px) rotate(5deg);
+        }
+
+        .card-back:nth-child(7) {
+            transform: translate(6px, 6px) rotate(6deg);
+        }
+
+        .card-back:nth-child(8) {
+            transform: translate(7px, 7px) rotate(7deg);
+        }
+
+        .card-back:nth-child(9) {
+            transform: translate(8px, 8px) rotate(8deg);
+        }
+
+        .card-back:nth-child(10) {
+            transform: translate(9px, 9px) rotate(9deg);
+        }
+
+        .card-back:nth-child(11) {
+            transform: translate(10px, 10px) rotate(10deg);
+        }
+
+        .card-back:nth-child(12) {
+            transform: translate(11px, 11px) rotate(11deg);
+        }
+
+        .card-back:nth-child(13) {
+            transform: translate(12px, 12px) rotate(12deg);
+        }
+
+        .card-back:nth-child(14) {
+            transform: translate(13px, 13px) rotate(13deg);
+        }
+
+        .card-back:nth-child(15) {
+            transform: translate(14px, 14px) rotate(14deg);
+        }
+
+        .card-face {
             width: 100%;
             height: 100%;
             position: absolute;
@@ -54,66 +119,101 @@
             align-items: center;
             font-size: 24px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        .card-face {
-            background-color: white;
+            background-color: #4b4b4b; /* Тот же фон, что и на задней стороне */
+            border: 2px solid #888888; /* Видимая граница */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transform: rotateY(180deg);
+            color: white; /* Белый текст */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Лёгкое свечение текста */
         }
-        .card.flipped {
-            transform: rotateY(180deg) translateX(50px);
+
+        .card-back.flipped {
+            transform: rotateY(180deg);
         }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="deck" id="deck">
-        <div class="card-back"></div>
-        <div class="card-back"></div>
-        <div class="card-back"></div>
-        <div class="card-back"></div>
-        <div class="card-back"></div>
-        <div class="card" id="card">
-            <div class="card-back"></div>
-            <div class="card-face" id="card-face"></div>
-        </div>
+<div class="deck" id="deck">
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back"></div>
+    <div class="card-back" id="card">
+        <div class="card-face" id="card-face"></div>
     </div>
+</div>
 
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+<script>
+    let tg = window.Telegram.WebApp;
+    tg.expand();
 
-        const tarotCards = [
-            "Шут", "Маг", "Верховная Жрица", "Императрица", "Император",
-            "Иерофант", "Влюбленные", "Колесница", "Сила", "Отшельник",
-            "Колесо Фортуны", "Справедливость", "Повешенный", "Смерть",
-            "Умеренность", "Дьявол", "Башня", "Звезда", "Луна", "Солнце",
-            "Суд", "Мир"
-        ];
+    const tarotCards = [
+        // Старшие арканы
+        "Шут", "Маг", "Верховная Жрица", "Императрица", "Император",
+        "Иерофант", "Влюбленные", "Колесница", "Сила", "Отшельник",
+        "Колесо Фортуны", "Справедливость", "Повешенный", "Смерть",
+        "Умеренность", "Дьявол", "Башня", "Звезда", "Луна", "Солнце",
+        "Суд", "Мир",
 
-        const deck = document.getElementById('deck');
-        const card = document.getElementById('card');
-        const cardFace = document.getElementById('card-face');
-        let isFlipped = false;
+        // Младшие арканы: Жезлы
+        "Туз Жезлов", "Двойка Жезлов", "Тройка Жезлов", "Четвёрка Жезлов",
+        "Пятёрка Жезлов", "Шестёрка Жезлов", "Семёрка Жезлов", "Восьмёрка Жезлов",
+        "Девятка Жезлов", "Десятка Жезлов", "Паж Жезлов", "Рыцарь Жезлов",
+        "Королева Жезлов", "Король Жезлов",
 
-        function callTelegram(cardName) {
-            tg.sendData(cardName);
-            tg.close();
+        // Младшие арканы: Кубки
+        "Туз Кубков", "Двойка Кубков", "Тройка Кубков", "Четвёрка Кубков",
+        "Пятёрка Кубков", "Шестёрка Кубков", "Семёрка Кубков", "Восьмёрка Кубков",
+        "Девятка Кубков", "Десятка Кубков", "Паж Кубков", "Рыцарь Кубков",
+        "Королева Кубков", "Король Кубков",
+
+        // Младшие арканы: Мечи
+        "Туз Мечей", "Двойка Мечей", "Тройка Мечей", "Четвёрка Мечей",
+        "Пятёрка Мечей", "Шестёрка Мечей", "Семёрка Мечей", "Восьмёрка Мечей",
+        "Девятка Мечей", "Десятка Мечей", "Паж Мечей", "Рыцарь Мечей",
+        "Королева Мечей", "Король Мечей",
+
+        // Младшие арканы: Пентакли
+        "Туз Пентаклей", "Двойка Пентаклей", "Тройка Пентаклей", "Четвёрка Пентаклей",
+        "Пятёрка Пентаклей", "Шестёрка Пентаклей", "Семёрка Пентаклей", "Восьмёрка Пентаклей",
+        "Девятка Пентаклей", "Десятка Пентаклей", "Паж Пентаклей", "Рыцарь Пентаклей",
+        "Королева Пентаклей", "Король Пентаклей"
+    ];
+
+    const deck = document.getElementById('deck');
+    const card = document.getElementById('card');
+    const cardFace = document.getElementById('card-face');
+    let isFlipped = false;
+
+    function callTelegram(cardName) {
+        const result = {
+            game: "card-of-the-day",
+            data: {card: cardName}
+        };
+        tg.sendData(JSON.stringify(result));
+        tg.close();
+    }
+
+    deck.addEventListener('click', () => {
+        if (!isFlipped) {
+            const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+            cardFace.textContent = randomCard;
+            card.classList.add('flipped');
+            isFlipped = true;
+            setTimeout(() => callTelegram(randomCard), 3000);
         }
-
-        deck.addEventListener('click', () => {
-            if (!isFlipped) {
-                const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-                cardFace.textContent = randomCard;
-                card.classList.add('flipped');
-                isFlipped = true;
-                setTimeout(() => callTelegram(randomCard), 3000); // Вызываем после завершения анимации
-            } else {
-                card.classList.remove('flipped');
-                isFlipped = false;
-                setTimeout(() => cardFace.textContent = '', 3000); // Очищаем текст когда карта перевернута обратно
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
