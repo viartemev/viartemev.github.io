@@ -233,7 +233,7 @@
     const selectedDeck = document.getElementById('selected-deck');
 
 
-    function callTelegram(cardName) {
+    function callTelegram(selectedCards) {
         const result = {
             game: "three-cards",
             data: {selectedCards: selectedCards}
@@ -244,25 +244,25 @@
 
     deck.addEventListener('click', () => {
         if (selectedCards.length < 3 && !isFlipped) {
+            console.log(selectedCards.length)
             const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
             cardFace.textContent = randomCard;
             card.classList.add('flipped');
             isFlipped = true;
 
+            selectedCards.push(randomCard);
+            const cardElement = document.createElement('div');
+            cardElement.className = 'selected-card';
+            cardElement.textContent = randomCard;
+            selectedDeck.appendChild(cardElement);
+
             setTimeout(() => {
-                selectedCards.push(randomCard);
-
-                const cardElement = document.createElement('div');
-                cardElement.className = 'selected-card';
-                cardElement.textContent = randomCard;
-                selectedDeck.appendChild(cardElement);
-
                 isFlipped = false
                 card.classList.remove('flipped')
             }, 1000)
 
             if (selectedCards.length === 3) {
-                setTimeout(() => callTelegram(randomCard), 3000);
+                setTimeout(() => callTelegram(selectedCards), 3000);
             }
         }
     });
