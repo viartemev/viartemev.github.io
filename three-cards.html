@@ -235,8 +235,8 @@
 
     function callTelegram(cardName) {
         const result = {
-            game: "card-of-the-day",
-            data: {card: cardName}
+            game: "three-cards",
+            data: {selectedCards: selectedCards}
         };
         tg.sendData(JSON.stringify(result));
         tg.close();
@@ -256,7 +256,6 @@
                 cardElement.className = 'selected-card';
                 cardElement.textContent = randomCard;
                 selectedDeck.appendChild(cardElement);
-
 
                 isFlipped = false
                 card.classList.remove('flipped')
