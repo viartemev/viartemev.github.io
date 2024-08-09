@@ -157,6 +157,30 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
+        .button-container {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        #readButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4b4b4b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        #readButton:hover {
+            background-color: #888888;
+        }
+
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -185,6 +209,9 @@
     <div class="card-back" id="card">
         <div class="card-face" id="card-face"></div>
     </div>
+</div>
+<div class="button-container">
+    <button id="readButton" style="display: none;">Отправить расклад</button>
 </div>
 
 <script>
@@ -262,8 +289,14 @@
             }, 1000)
 
             if (selectedCards.length === 3) {
-                setTimeout(() => callTelegram(selectedCards), 3000);
+                setTimeout(() => document.getElementById('readButton').style.display = 'block', 1000);
             }
+        }
+    });
+
+    document.getElementById('readButton').addEventListener('click', () => {
+        if (selectedCards.length === 3) {
+            setTimeout(() => callTelegram(selectedCards), 3000);
         }
     });
 </script>
