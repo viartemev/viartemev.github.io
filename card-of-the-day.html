@@ -130,6 +130,30 @@
         .card-back.flipped {
             transform: rotateY(180deg);
         }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        #readButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4b4b4b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        #readButton:hover {
+            background-color: #888888;
+        }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -152,6 +176,9 @@
     <div class="card-back" id="card">
         <div class="card-face" id="card-face"></div>
     </div>
+</div>
+<div class="button-container">
+    <button id="readButton" style="display: none;">Отправить расклад</button>
 </div>
 
 <script>
@@ -195,6 +222,7 @@
     const card = document.getElementById('card');
     const cardFace = document.getElementById('card-face');
     let isFlipped = false;
+    let randomCard;
 
     function callTelegram(cardName) {
         const result = {
@@ -207,11 +235,17 @@
 
     deck.addEventListener('click', () => {
         if (!isFlipped) {
-            const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+            randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
             cardFace.textContent = randomCard;
             card.classList.add('flipped');
+            setTimeout(() => document.getElementById('readButton').style.display = 'block', 1000);
             isFlipped = true;
-            setTimeout(() => callTelegram(randomCard), 3000);
+        }
+    });
+
+    document.getElementById('readButton').addEventListener('click', () => {
+        if (isFlipped) {
+            callTelegram(randomCard);
         }
     });
 </script>
