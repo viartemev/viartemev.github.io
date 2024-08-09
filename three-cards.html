@@ -296,7 +296,7 @@
 
     document.getElementById('readButton').addEventListener('click', () => {
         if (selectedCards.length === 3) {
-            setTimeout(() => callTelegram(selectedCards), 3000);
+            callTelegram(selectedCards);
         }
     });
 </script>
